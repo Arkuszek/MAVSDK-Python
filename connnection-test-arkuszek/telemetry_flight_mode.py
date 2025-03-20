@@ -5,7 +5,7 @@ from mavsdk import System
 
 
 async def print_flight_mode():
-    drone = System()
+    drone = System(mavsdk_server_address='localhost')
     await drone.connect(system_address="udp://:14540")
 
     print("Waiting for drone to connect...")
@@ -13,9 +13,10 @@ async def print_flight_mode():
         if state.is_connected:
             print(f"-- Connected to drone!")
             break
-
     # async for flight_mode in drone.telemetry.flight_mode():
     #     print("FlightMode:", flight_mode)
+    # async for altitude in drone.telemetry.altitude():
+    #     print("Altittude:", altitude.altitude_local_m)
 
     async for position in drone.telemetry.position():
         print(f"Lat:{position.latitude_deg} || Lon:{position.longitude_deg}")
